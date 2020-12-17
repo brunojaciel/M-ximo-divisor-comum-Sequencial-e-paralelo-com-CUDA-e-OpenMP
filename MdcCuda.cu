@@ -4,7 +4,7 @@
 #include <cuda_runtime.h>
 
 __global__
-void mdcParaleloCUDA(int *x, int *y, int *resto)
+void mdcSequencialCUDA(int *x, int *y, int *resto)
 {
     do
     {
@@ -44,7 +44,7 @@ int main(void)
   cudaMemcpy(d_resto, &resto, size, cudaMemcpyHostToDevice);
 
   // Resolvendo a operacao MDC dentro da GPU
-  mdcParaleloCUDA<<<1,1>>>(d_x, d_y, d_resto);
+  mdcSequencialCUDA<<<1,1>>>(d_x, d_y, d_resto);
 
   // Copiando o resultado de volta para o host
   cudaMemcpy(&x, d_x, size, cudaMemcpyDeviceToHost);
